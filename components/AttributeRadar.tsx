@@ -17,24 +17,23 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
   ];
 
   return (
-    /* 修改点：高度在移动端从 64 稍微下调到 60 (240px)，防止结算页过长需要频繁滚动 */
-    <div className="w-full h-60 md:h-80 animate-fade-in">
+    /* 修改点：显著提升 PC 端 (xl) 的高度到 450px，确保雷达图有足够的伸展空间 */
+    <div className="w-full h-60 md:h-80 xl:h-[450px] animate-fade-in">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart 
           cx="50%" 
           cy="50%" 
-          /* 修改点：移动端将半径缩减到 65%，为外圈文字留出更多 padding 空间，防止文字溢出屏幕 */
-          outerRadius="65%" 
+          /* 修改点：利用断点调整半径。移动端 65% 保证文字不溢出，电脑端 (xl) 提升至 80% 撑满容器 */
+          outerRadius={window.innerWidth > 1280 ? "80%" : "65%"} 
           data={data}
-          /* 修改点：调整 margin 策略，确保文字不会贴边 */
           margin={{ top: 20, right: 40, bottom: 20, left: 40 }}
         >
           <PolarGrid stroke="#d4a373" strokeOpacity={0.2} strokeDasharray="3 3" />
           
           <PolarAngleAxis 
             dataKey="subject" 
-            /* 修改点：移动端字号从 14 降至 12，增加文字与图表的间距 (tickSize) */
-            tick={{ fill: '#d4a373', fontSize: 12, fontWeight: 'bold' }} 
+            /* 修改点：电脑端字号增大到 16px，更显庄重 */
+            tick={{ fill: '#d4a373', fontSize: window.innerWidth > 1280 ? 16 : 12, fontWeight: 'bold' }} 
             tickSize={15}
           />
           
@@ -60,7 +59,7 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
       </ResponsiveContainer>
       
       <div className="text-center">
-        <p className="text-[10px] text-stone-500 font-serif tracking-widest italic">
+        <p className="text-[10px] md:text-xs text-stone-500 font-serif tracking-widest italic">
           — 乾坤已定，命数归一 —
         </p>
       </div>
