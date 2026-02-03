@@ -34,6 +34,9 @@ export interface Option {
   text: string;      // 选项描述
   scores: [number, number, number, number]; // [权谋, 仁德, 革新, 守正]
   reaction?: Reaction; 
+  nextId?: number;    // 新增：手动指定下一题的 ID，实现网状跳转
+  requirement?: Partial<Attributes>; // 新增：进入该选项或通过该选项所需的数值门槛
+  failEnding?: EndingType; // 新增：若未达到数值门槛，直接触发的结局类型
 }
 
 /**
@@ -57,5 +60,7 @@ export enum EndingType {
   LONELY_DEATH = "孤帝崩殂",
   INNOVATOR = "革新先驱",
   BLANK_SLATE = "无字留白",
-  DEFAULT = "历史的过客"
+  DEFAULT = "历史的过客",
+  FAILED_USURP = "政变失败", // 新增：数值未达标触发的失败结局
+  COLD_PALACE = "冷宫弃妃"   // 新增：数值未达标触发的失败结局
 }

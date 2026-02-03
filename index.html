@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>无字碑：大唐史官的隐形铭文</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -12,6 +12,13 @@
             --paper-ochre: #2d241e;
             --accent-gold: #d4a373;
             --accent-red: #8b0000;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            touch-action: manipulation;
         }
         body {
             background-color: var(--bg-brown);
@@ -73,7 +80,7 @@
     </script>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root" style="height: 100%;"></div>
     <script type="module" src="/index.tsx"></script> 
 </body>
 </html>

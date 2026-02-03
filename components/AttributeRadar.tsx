@@ -9,7 +9,6 @@ interface Props {
 }
 
 const AttributeRadar: React.FC<Props> = ({ attributes }) => {
-  // 转换数据，确保属性顺序与进度条展示一致
   const data = [
     { subject: '权谋', A: attributes.cunning },
     { subject: '仁德', A: attributes.benevolence },
@@ -18,25 +17,27 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
   ];
 
   return (
-    <div className="w-full h-64 md:h-80 animate-fade-in">
+    /* 修改点：高度在移动端从 64 稍微下调到 60 (240px)，防止结算页过长需要频繁滚动 */
+    <div className="w-full h-60 md:h-80 animate-fade-in">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart 
           cx="50%" 
           cy="50%" 
-          outerRadius="75%" 
+          /* 修改点：移动端将半径缩减到 65%，为外圈文字留出更多 padding 空间，防止文字溢出屏幕 */
+          outerRadius="65%" 
           data={data}
-          margin={{ top: 10, right: 30, bottom: 10, left: 30 }}
+          /* 修改点：调整 margin 策略，确保文字不会贴边 */
+          margin={{ top: 20, right: 40, bottom: 20, left: 40 }}
         >
-          {/* 网格线颜色调整为暗铜色，增加仪式感 */}
           <PolarGrid stroke="#d4a373" strokeOpacity={0.2} strokeDasharray="3 3" />
           
-          {/* 刻度轴标签：使用古风配色 */}
           <PolarAngleAxis 
             dataKey="subject" 
-            tick={{ fill: '#d4a373', fontSize: 14, fontWeight: 'bold' }} 
+            /* 修改点：移动端字号从 14 降至 12，增加文字与图表的间距 (tickSize) */
+            tick={{ fill: '#d4a373', fontSize: 12, fontWeight: 'bold' }} 
+            tickSize={15}
           />
           
-          {/* 隐藏数值刻度，但保留环形层级感 */}
           <PolarRadiusAxis 
             angle={45} 
             domain={[0, 150]} 
@@ -44,7 +45,6 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
             axisLine={false} 
           />
           
-          {/* 雷达覆盖区：渐变金配色与动效 */}
           <Radar
             name="命格属性"
             dataKey="A"
@@ -52,7 +52,6 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
             strokeWidth={2}
             fill="#d4a373"
             fillOpacity={0.5}
-            // 增加生长动画
             isAnimationActive={true}
             animationDuration={1500}
             animationBegin={300}
@@ -60,7 +59,6 @@ const AttributeRadar: React.FC<Props> = ({ attributes }) => {
         </RadarChart>
       </ResponsiveContainer>
       
-      {/* 底部装饰文案 */}
       <div className="text-center">
         <p className="text-[10px] text-stone-500 font-serif tracking-widest italic">
           — 乾坤已定，命数归一 —
