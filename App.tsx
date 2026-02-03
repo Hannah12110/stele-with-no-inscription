@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import startBg from './assets/bgs/bg_start.jpg';
+import React, { useState, useEffect } from 'react'; // 修改：引入 useEffect
 import { Attributes, EndingType, Question, Reaction, Character } from './types';
 import { QUESTIONS, INITIAL_ATTRIBUTES } from './constants';
 import { generateInscription } from './services/geminiService';
@@ -37,6 +38,22 @@ const App: React.FC = () => {
   const [pendingState, setPendingState] = useState<{attrs: Attributes, choice: string, choices: string[]}>({
     attrs: INITIAL_ATTRIBUTES, choice: '', choices: []
   });
+
+  // --- 新增：所有图片预加载逻辑 ---
+  useEffect(() => {
+    const baseUrl = import.meta.env.BASE_URL;
+    const imagesToPreload = [
+      "assets/bgs/bg_start.jpg",
+      "assets/bgs/bg_result.jpg",
+      ...QUESTIONS.map(q => q.background)
+    ];
+
+    imagesToPreload.forEach(path => {
+      const img = new Image();
+      const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+      img.src = `${baseUrl}${cleanPath}`;
+    });
+  }, []);
 
   const currentQuestion = QUESTIONS[currentQuestionIndex];
 
