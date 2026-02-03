@@ -225,17 +225,41 @@ const App: React.FC = () => {
           <div className="max-w-4xl w-full space-y-8 animate-fade-in-up bg-[#2d241e]/85 backdrop-blur-2xl p-6 md:p-10 border border-[#d4a373]/30 rounded-lg shadow-2xl relative min-h-[600px] z-20">
             
             <div className="relative z-50 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-[#d4a373]/20 pb-6 gap-4">
-              <span className="text-[#d4a373] font-bold tracking-widest text-lg font-weibei">第 {currentQuestionIndex + 1} / 10 抉择</span>
+              <span className="text-[#d4a373] font-bold tracking-widest text-lg font-weibei whitespace-nowrap">第 {currentQuestionIndex + 1} / 10 抉择</span>
               
-              {/* 核心重构区域：通过 w-full 配合 grid 强制移动端 2x2 布局 */}
-              <div className="w-full md:w-2/3">
-                 <div className="grid grid-cols-2 gap-x-6 gap-y-2 md:grid-cols-1 md:gap-0">
-                    <AttributeBars attributes={attributes} diffs={currentDiffs} />
-                 </div>
+              {/* 修改：手动渲染进度条以实现手机端 2x2，电脑端 1x4 */}
+              <div className="w-full md:w-3/4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 md:gap-6">
+                  {[
+                    { label: '权谋', key: 'cunning', idx: 0 },
+                    { label: '仁德', key: 'benevolence', idx: 1 },
+                    { label: '革新', key: 'innovation', idx: 2 },
+                    { label: '守正', key: 'integrity', idx: 3 },
+                  ].map((item) => (
+                    <div key={item.key} className="flex flex-col gap-1">
+                      <div className="flex justify-between items-center text-[10px] text-[#d4a373]">
+                        <span className="font-bold tracking-tight">{item.label}</span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-mono opacity-80">{attributes[item.key as keyof Attributes]}</span>
+                          {currentDiffs && currentDiffs[item.idx] !== 0 && (
+                            <span className={`text-[8px] ${currentDiffs[item.idx] > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                              {currentDiffs[item.idx] > 0 ? `+${currentDiffs[item.idx]}` : currentDiffs[item.idx]}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="h-1 w-full bg-black/40 rounded-full border border-[#d4a373]/20 overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-[#8b0000] to-[#d4a373] transition-all duration-1000"
+                          style={{ width: `${Math.min(Math.max(attributes[item.key as keyof Attributes], 0), 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* 修改点：将 duration-200 修改为 duration-75 极速切换 */}
             <div className={`relative z-20 transition-all duration-75 ${isReactionVisible ? 'opacity-20 blur-sm scale-[0.98]' : ''}`}>
               {currentQuestion.newCharacters && currentQuestion.newCharacters.length > 0 && 
                 renderCharacterList(currentQuestion.newCharacters)
