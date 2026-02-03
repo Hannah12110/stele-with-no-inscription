@@ -262,18 +262,18 @@ const renderCharacterList = (characters: Character[]) => (
       <div className="safe-h-screen w-full relative overflow-hidden text-stone-200">
         <div 
           key={getBackgroundImage()} 
-          className="absolute inset-0 bg-cover bg-no-repeat bg-transition z-0 bg-[50%_15%] md:bg-center"
+          className="absolute inset-0 bg-cover bg-no-repeat bg-transition z-0 bg-center"
           style={{ backgroundImage: `url(${getBackgroundImage()})` }}
         />
         
         <div className="absolute inset-0 bg-black/30 md:bg-black/40 backdrop-blur-[0.5px] md:backdrop-blur-[1px] z-10"></div>
         <div className="absolute inset-0 opacity-5 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] z-10"></div>
 
-        {/* 修改核心对齐方式：justify-center 改为 justify-start，并加入 no-scrollbar */}
-        <div className="relative z-20 h-full w-full overflow-y-auto overflow-x-hidden flex flex-col items-center justify-start no-scrollbar">
+        {/* 核心对齐方式：修改为 justify-center 确保全屏居中 */}
+        <div className="relative z-20 h-full w-full overflow-y-auto no-scrollbar flex flex-col items-center justify-center p-4">
           
           {gameState === 'start' && (
-            <div className="my-auto max-w-2xl w-[92%] text-center space-y-8 md:space-y-12 animate-fade-in bg-stone-900/80 backdrop-blur-xl p-6 md:p-12 border border-[#d4a373]/30 rounded-lg shadow-2xl">
+            <div className="max-w-2xl w-[92%] text-center space-y-8 md:space-y-12 animate-fade-in bg-stone-900/80 backdrop-blur-xl p-6 md:p-12 border border-[#d4a373]/30 rounded-lg shadow-2xl">
               <h1 className="text-5xl md:text-8xl font-weibei text-[#d4a373] drop-shadow-[0_0_15px_rgba(212,163,115,0.5)]">无字碑</h1>
               <div className="h-px w-full bg-gradient-to-r from-transparent via-[#d4a373]/50 to-transparent"></div>
               <div className="space-y-4 md:space-y-6">
@@ -290,7 +290,7 @@ const renderCharacterList = (characters: Character[]) => (
           )}
 
           {gameState === 'playing' && (
-            <div className="w-full max-w-4xl flex flex-col p-3 md:p-10 mb-4 md:mb-0 pt-12 md:pt-16">
+            <div className="w-full max-w-4xl flex flex-col animate-fade-in">
               <div className="bg-[#1a140f]/90 md:bg-[#2d241e]/90 backdrop-blur-2xl p-4 md:p-10 border border-[#d4a373]/30 rounded-2xl md:rounded-lg shadow-2xl flex flex-col relative overflow-hidden">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-[#d4a373]/20 pb-4 md:pb-6 gap-3 md:gap-4 mb-4 md:mb-6">
                   <span className="text-[#d4a373] font-bold tracking-widest text-base md:text-lg font-weibei">第 {currentQuestion.id} / 10 抉择</span>
@@ -370,8 +370,7 @@ const renderCharacterList = (characters: Character[]) => (
           )}
 
          {gameState === 'result' && (
-          <div className="w-full max-w-5xl space-y-4 md:space-y-8 animate-fade-in p-3 md:p-4 pt-16 pb-10">
-            {/* 1. 标题部分：pt-16 确保顶端文字不被遮挡 */}
+          <div className="w-full max-w-5xl flex flex-col items-center justify-center space-y-6 md:space-y-8 animate-fade-in py-4">
             <div className="text-center space-y-2 md:space-y-4 relative z-50">
               <p className="text-[#d4a373] tracking-[0.6em] md:tracking-[1em] font-bold uppercase text-[10px] md:text-sm">天 命 终 结</p>
               <h2 className="text-4xl md:text-7xl font-weibei text-yellow-500 gold-glow drop-shadow-2xl">
@@ -379,25 +378,24 @@ const renderCharacterList = (characters: Character[]) => (
               </h2>
             </div>
 
-            <div className="flex flex-col xl:flex-row gap-6 md:gap-8 items-stretch">
-              <div className="xl:w-3/5 w-full order-2 xl:order-1">
-                {/* 2. 优化碑文容器，加入 no-scrollbar */}
-                <div className="tombstone-texture p-4 pt-8 md:p-16 border-y-8 border-[#d4a373]/20 min-h-[400px] md:min-h-[600px] flex justify-center items-center bg-stone-900/70 backdrop-blur-lg shadow-inner overflow-x-auto relative z-10 h-full no-scrollbar">
+            <div className="flex flex-col xl:flex-row gap-6 md:gap-8 items-center xl:items-stretch justify-center w-full">
+              <div className="w-full xl:w-3/5 order-2 xl:order-1">
+                <div className="tombstone-texture p-4 pt-8 md:p-16 border-y-8 border-[#d4a373]/20 min-h-[300px] md:min-h-[600px] flex justify-center items-center bg-stone-900/70 backdrop-blur-lg shadow-inner overflow-x-auto relative z-10 no-scrollbar">
                   {ending !== EndingType.BLANK_SLATE && (
-                    <div className="writing-vertical-rl text-[#fefae0] text-xl md:text-4xl leading-[1.8] md:leading-[2.2] font-weibei opacity-90 h-[80%] md:h-[85%] py-4 min-w-max">
+                    <div className="writing-vertical-rl text-[#fefae0] text-xl md:text-4xl leading-[1.8] md:leading-[2.2] font-weibei opacity-90 h-[60vh] md:h-[85%] py-4 min-w-max">
                       <p className="whitespace-pre-wrap tracking-[0.15em]">{inscription}</p>
                     </div>
                   )}
                 </div>
               </div>
               
-              <div className="xl:w-2/5 w-full order-1 xl:order-2 flex flex-col gap-4 md:gap-6">
-                <div className="bg-[#1a140f]/80 backdrop-blur-xl p-4 md:p-8 border-2 border-[#d4a373]/30 rounded-lg shadow-xl flex flex-col flex-grow">
-                  <h3 className="text-[#d4a373] text-base md:text-xl font-bold border-b border-[#d4a373]/20 pb-3 md:pb-4 mb-4 tracking-widest uppercase text-center font-weibei">皇 权 衡 柱</h3>
-                  <div className="flex justify-center items-center flex-grow py-1 md:py-2 scale-90 md:scale-100">
+              <div className="w-full xl:w-2/5 order-1 xl:order-2 flex flex-col gap-4 md:gap-6">
+                <div className="bg-[#1a140f]/80 backdrop-blur-xl p-4 md:p-8 border-2 border-[#d4a373]/30 rounded-lg shadow-xl flex flex-col items-center flex-grow">
+                  <h3 className="text-[#d4a373] text-base md:text-xl font-bold border-b border-[#d4a373]/20 pb-3 md:pb-4 mb-4 tracking-widest uppercase text-center font-weibei w-full">皇 权 衡 柱</h3>
+                  <div className="flex justify-center items-center py-1 md:py-2 scale-90 md:scale-100">
                     <AttributeRadar attributes={attributes} />
                   </div>
-                  <div className="mt-auto p-4 md:p-6 bg-stone-900/80 border-l-2 border-[#d4a373] rounded-r-sm">
+                  <div className="mt-4 p-4 md:p-6 bg-stone-900/80 border-l-2 border-[#d4a373] rounded-r-sm w-full">
                     <p className="text-[#d4a373] text-[9px] tracking-[0.1em] font-bold mb-2 md:mb-3 uppercase font-serif">✦ 史 官 简 评</p>
                     <p className="text-stone-200 text-sm md:text-lg font-weibei italic leading-relaxed">
                       “{getEvaluation()}”
@@ -420,4 +418,3 @@ const renderCharacterList = (characters: Character[]) => (
 };
 
 export default App;
-
