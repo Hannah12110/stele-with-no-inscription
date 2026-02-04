@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>无字碑：书写武后的一生</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-brown: #1a140f;
+            --paper-ochre: #2d241e;
+            --accent-gold: #d4a373;
+            --accent-red: #8b0000;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            /* 修改点：允许纵向溢出滚动，防止标题被挤出后无法找回 */
+            overflow-x: hidden;
+            overflow-y: auto;
+            touch-action: pan-y pinch-zoom;
+        }
+        body {
+            background-color: var(--bg-brown);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(45, 36, 30, 0.4) 0%, rgba(26, 20, 15, 1) 100%),
+                url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: #f5f5dc;
+            font-family: 'Noto Serif SC', serif;
+        }
+        .font-calligraphy {
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        .font-weibei {
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 0.15em;
+        }
+        .tombstone-texture {
+            background: linear-gradient(135deg, #3d342d 0%, #1a140f 100%);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+        }
+        .gold-glow {
+            text-shadow: 0 0 12px rgba(212, 163, 115, 0.6);
+        }
+        .writing-vertical-rl {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        .parchment-btn {
+            background: linear-gradient(to bottom, #3d342d, #2d241e);
+            border: 1px solid #d4a373;
+            box-shadow: 0 4px 0 #1a140f;
+            transition: all 0.2s;
+        }
+        .parchment-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1a140f;
+        }
+        .history-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4a373, transparent);
+        }
+        .progress-bar-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #8b0000 0%, #d4a373 100%);
+            box-shadow: 0 0 10px rgba(212, 163, 115, 0.4);
+        }
+    </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+        "recharts": "https://esm.sh/recharts@^3.7.0"
+      }
+    }
+    </script>
+  <script type="module" crossorigin src="/stele-with-no-inscription/assets/index-BKTt10aQ.js"></script>
+</head>
+<body>
+    <div id="root" style="min-height: 100%; position: relative; z-index: 10;"></div> 
+</body>
+</html>
